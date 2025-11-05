@@ -1,53 +1,45 @@
-contacts = []
-while True:
-    print("\nContact Management System")
-    print("1. Add Contact")
-    print("2. View Contacts")
-    print("3. Search Contact")
-    print("4. Delete Contact")
-    print("5. Exit")
+products=[
+    {"name" : "iphone", "price" : 1200},
+    {"name" : "macbook", "price" : 2500},
+    {"name" : "airpods", "price" : 200},
+    {"name" : "ipad", "price" : 900}
+]
+for product in products:
+    if product["price"] <= 1000:
+        print(f"{product['name']} ")
 
-    choice = input("Choose an option (1-5): ")
-
-    if choice == '1':
-        name = input("Enter contact name: ")
-        phone = input("Enter contact phone number: ")
-        contacts.append({'name': name, 'phone': phone})
-        print(f"Contact {name} added.")
-
-    elif choice == '2':
-        if contacts:
-            print("\nContacts List:")
-            for contact in contacts:
-                print(f"{contact['name']} | {contact['phone']}")
-
-
-    elif choice == '3':
-        search = input("Enter the name to search: ")
-        found = False
-        for contact in contacts:
-            if contact['name'] == search:
-                print(f"{contact['name']} | {contact['phone']}")
-                found = True
-                break
-        if not found:
-            print(" not found")
-
-    elif choice == '4':
-        delete = input("Enter the name of the contact to delete: ")
-        found = False
-        for contact in contacts:
-            if contact['name'] == delete:
-                contacts.remove(contact)
-                print("deleted")
-                found = True
-                break
-        if not found:
-            print(" not found")
-
-    elif choice == '5':
-        print("Exiting the Contact Management System.")
+for product in products:
+    product["price"] *=1.10
+    print(f"{product['name']} price is {product['price']}")
+sorted_products = sorted(products, key=lambda p: p["price"],reverse=False)
+for product in sorted_products:
+    print(f"{product['name']} : {product['price']}")
+query=input("What would you like to search for? ")
+found=False
+for product in products:
+    if query.lower() in product["name"].lower():
+        print(f"Found: {product['name']} at price {product['price']}")
+        found=True
         break
+if not found:
+    print("No products found matching your query.")
+new_prod=input("Enter new product name: ")
+new_price=float(input("Enter new product price: "))
+products.append({"name":new_prod,"price":new_price})
+print("Updated product list:")
+for product in products:
+    print(f"{product['name']} : {product['price']}")
 
-    else:
-        print("Invalid option. Please try again.")
+del_prod=input("Enter product name to delete: ")
+found = False
+for product in products:
+    if product["name"].lower() == del_prod.lower():
+        products.remove(product)
+        found = True
+        print(f"{del_prod} has been removed.")
+        break
+if not found:
+    print(f"{del_prod} not found in the product list.")
+print("Final product list:")
+for product in products:
+    print(f"{product['name']} : {product['price']}")
